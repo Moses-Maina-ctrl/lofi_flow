@@ -27,6 +27,24 @@ const Sidebar = () => {
         <div className="w-48 px-5 mb-5 ">
           <NextImage src="/lofi_light.png" width={1440} height={2880} alt="Lofi Flow Logo" />
         </div>
+        <div className="mb-5">
+          {navMenu.map((link) => {
+            const LinkIcon = link.icon;
+            return (
+
+              <Link
+                key={link.name}
+                href={link.href}
+                className="flex"
+              >
+                <LinkIcon className="w-6" />
+                <p>{link.name}</p>
+
+              </Link>
+            )
+          })}
+
+        </div>
       </div>
     </div>
   )
