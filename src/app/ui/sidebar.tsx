@@ -24,26 +24,23 @@ const Sidebar = () => {
   return (
     <div className="w-full h-[calc(100vh-100px)] px-1.5">
       <div className="py-5 " >
-        <div className="w-48 px-5 mb-5 ">
-          <NextImage src="/lofi_light.png" width={1440} height={2880} alt="Lofi Flow Logo" />
+        <div className="w-48 px-4 mb-4 ">
+          <NextImage src="/lofi_light1.png" width={1440} height={2880} alt="Lofi Flow Logo" />
         </div>
         <div className="mb-5">
           {navMenu.map((link) => {
             const LinkIcon = link.icon;
             return (
-
               <Link
                 key={link.name}
                 href={link.href}
-                className="flex"
+                className="flex items-center "
               >
-                <LinkIcon className="w-6" />
+                <LinkIcon className="w-6 mr-4 " />
                 <p>{link.name}</p>
-
               </Link>
             )
           })}
-
         </div>
       </div>
     </div>
