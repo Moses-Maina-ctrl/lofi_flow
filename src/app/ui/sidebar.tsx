@@ -76,7 +76,7 @@ const Sidebar = () => {
           <ul>
 
             {playlist.map((link) => (
-              <li>
+              <li key={link}>
                 {link}
               </li>
             )
