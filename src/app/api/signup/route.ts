@@ -5,7 +5,7 @@ import prisma from '../../../../lib/prisma'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export async function POST(req: NextApiRequest, res: NextApiResponse) {
   const salty = bcrypt.genSaltSync()
   const { email, password } = req.body
 
