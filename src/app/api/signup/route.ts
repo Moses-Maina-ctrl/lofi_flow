@@ -2,12 +2,13 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import cookie from 'cookie'
 import prisma from '../../../../lib/prisma'
-import { NextApiRequest, NextApiResponse } from 'next'
+import { cookies } from 'next/headers'
 
-
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
+export async function POST(request: Request) {
   const salty = bcrypt.genSaltSync()
-  const { email, password } = req.body
+  const body = await request.json()
+  const { email, password } = body
+
 
   let user
 
@@ -16,32 +17,39 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
       data: {
         email,
         password: bcrypt.hashSync(password, salty)
+
       }
     })
-  } catch (err) {
-    res.status(401)
-    res.json({ error: 'User already exists' })
-    return
+  } catch (error) {
+    return new Response(JSON.stringify({ error: "User already Exists" }), {
+      status: 401,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
   }
 
   const token = jwt.sign({
     email: user.email,
     id: user.email,
     time: Date.now(),
-  }, 'hello',
+  },
+    'hello',
     { expiresIn: '8h' }
   )
-
-  res.setHeader(
-    'Set-Cookie',
-    cookie.serialize('TRAX_ACCESS_TOKEN', token, {
-      httpOnly: true,
-      maxAge: 8 * 60 * 60,
-      path: '/',
-      sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
-    })
-  )
-  res.json(user)
-
+  cookies().set('Set-Cookie', cookie.serialize('TRAX_ACCESS_TOKEN', token, {
+    httpOnly: true,
+    maxAge: 8 * 60 * 60,
+    path: '/',
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+  }))
+  return new Response(JSON.stringify(user), {
+    status: 200,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
 }
+
+
