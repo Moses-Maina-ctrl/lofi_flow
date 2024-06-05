@@ -32,7 +32,7 @@ const AuthForm: React.FC<{ mode: 'Sign In' | 'Sign Up' }> = ({ mode }) => {
           <input type="password" placeholder=" Password" onChange={(e) => setPassword(e.target.value)} />
         </div>
         <div className="form-control mt-6">
-          <button className={`btn btn-primary ${isLoading ? 'loading' : ''}`} type="submit"  >{mode}</button>
+          <button className={`btn btn-primary  ${isLoading ? 'loading' : ''}`} type="submit"  >{mode}</button>
         </div>
       </form>
     </div>

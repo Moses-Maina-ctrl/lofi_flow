@@ -31,7 +31,7 @@ export async function POST(request: Request) {
 
   const token = jwt.sign({
     email: user.email,
-    id: user.email,
+    id: user.id,
     time: Date.now(),
   },
     'hello',
